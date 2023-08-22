@@ -1,0 +1,88 @@
+use db_payroll;
+
+
+CREATE TABLE `degree`(
+	`id` INT NOT NULL AUTO_INCREMENT  PRIMARY key,
+	`type` VARCHAR (255)
+
+);
+
+CREATE TABLE `department`(
+	`id` INT NOT NULL AUTO_INCREMENT  PRIMARY key,
+	`name` VARCHAR (255)
+
+);
+
+CREATE TABLE `employee` (
+	`id` INT NOT NULL AUTO_INCREMENT PRIMARY key,
+	`name` VARCHAR(255),
+	`gender` VARCHAR(1),
+	`position` INT,
+	`degree_id` INT,
+	`dept_id` INT,	
+	 foreign KEY(degree_id) REFERENCES degree(id),
+	 foreign KEY(dept_id) REFERENCES department(id)
+);	
+
+CREATE TABLE `salary` (
+	`id` INT NOT NULL AUTO_INCREMENT PRIMARY key,
+	`academic_year_id` int,
+	`degree_id` INT,
+	 foreign KEY(degree_id) REFERENCES degree(id)
+);	
+
+CREATE TABLE `amount_type` (
+	`id` INT NOT NULL AUTO_INCREMENT PRIMARY key,
+	`amount` int,
+	`currency` VARCHAR(255),
+	`name` VARCHAR(255),
+	`salary_id` INT,
+	 foreign KEY(salary_id) REFERENCES salary(id)
+);	
+
+CREATE TABLE `total_hour` (
+	`id` INT NOT NULL AUTO_INCREMENT PRIMARY key,
+	`degree_id` int,
+	`dept_id` int,
+	`emp_id` int,
+	 foreign KEY(emp_id) REFERENCES employee(id),
+	 foreign KEY(degree_id) REFERENCES degree(id),
+	 foreign KEY(dept_id) REFERENCES department(id)
+);
+
+CREATE TABLE `monthly` (
+	`id` INT NOT NULL AUTO_INCREMENT PRIMARY key,
+	`salary_id` INT,
+	`total_hour` INT,
+	`month` VARCHAR(255),
+	 foreign KEY(salary_id) REFERENCES salary(id)
+)
+
+CREATE TABLE `project_inc` (
+	`id` INT NOT NULL AUTO_INCREMENT PRIMARY key,
+	`name` VARCHAR(255),
+	`start_date` DATE,
+	`end_date` DATE,
+	`total_amount` INT, 
+	`monthly_id` int,
+	foreign KEY(monthly_id) REFERENCES monthly(id)
+)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ 
